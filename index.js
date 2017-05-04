@@ -43,7 +43,7 @@ module.exports = function (opts) {
 			}
 
 			if (opts.ignoreError) {
-				gutil.log(err)
+				gutil.log(err.message)
 				setImmediate(cb, null, file);
 			} else {
 				// prevent stream unhandled exception from being suppressed by Promise
