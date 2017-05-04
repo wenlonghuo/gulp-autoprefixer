@@ -42,11 +42,16 @@ module.exports = function (opts) {
 				err.message += err.showSourceCode();
 			}
 
-			// prevent stream unhandled exception from being suppressed by Promise
-			setImmediate(cb, new gutil.PluginError('gulp-autoprefixer', err, {
-				fileName: file.path,
-				showStack: !cssError
-			}));
+			if (opts.ignoreError) {
+				gutil.log(err)
+				setImmediate(cb, null, file);
+			} else {
+				// prevent stream unhandled exception from being suppressed by Promise
+				setImmediate(cb, new gutil.PluginError('gulp-autoprefixer', err, {
+					fileName: file.path,
+					showStack: !cssError
+				}));
+			}
 		});
 	});
 };
